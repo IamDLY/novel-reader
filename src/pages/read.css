@@ -1,0 +1,134 @@
+.read-page {
+  padding: .36rem .44rem;
+  background-color: #f1edeb;
+}
+
+.read-page > .nav-bar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1.4rem;
+  align-items: center;
+  background-color: rgba(0,0,0,.9);
+  padding: 0 .4rem;
+}
+
+.read-page > .nav-bar > .back-btn {
+  display: flex;
+  align-items: center;
+}
+
+.read-page > .nav-bar > .back-btn > .icon {
+  height: .72rem;
+  width: auto;
+}
+
+.read-page > .nav-bar > .back-btn > .title {
+  color: #c0c0c0;
+  padding-left: .68rem;
+  font-size: .46rem;
+}
+
+.read-page > .touch-layer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 25vh;
+  bottom: 25vh;
+  background-color: transparent;
+}
+
+.read-page > p {
+  font-size: .48rem;
+  line-height: 1.8;
+}
+
+.read-page > .bottom-menu {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5rem;
+  background-color: rgba(0,0,0,.9);
+}
+
+.read-page > .bottom-menu > .menu-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: 100%;
+}
+
+.read-page > .bottom-menu > .menu-item > .icon {
+  width: .6rem;
+  height: .6rem;
+}
+
+.read-page > .bottom-menu > .menu-item > .label {
+  color: #9f9f9f;
+  padding-top: .1rem;
+}
+
+.read-page > .chapter-list-view {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  width: 9.68rem;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list-contain-header {
+  padding-top: 1rem;
+  padding-left: .45rem;
+  padding-right: .45rem;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list-contain-header > .title {
+  font-size: .54rem;
+  font-weight: bold;
+  color: #616166;
+  padding-bottom: .58rem;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list-contain-header > .chapter-list-control {
+  padding-bottom: .34rem;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list-contain-header > .chapter-list-control > .label {
+  font-size: .42rem;
+  color: #616166;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list {
+  display: block;
+  overflow: auto;
+  height: 100%;
+  padding: 0 .45rem 1.4rem .45rem;
+}
+
+.read-page > .chapter-list-view > .chapter-list-contain > .chapter-list > .chapter-list-item {
+  display: flex;
+  align-items: center;
+  height: 1.4rem;
+  font-size: .42rem;
+  color: #616166;
+}
+
+.read-page > .chapter-list-view > .chapter-list-touch-layer {
+  flex: 1;
+  background-color: rgba(0,0,0,.6);
+}

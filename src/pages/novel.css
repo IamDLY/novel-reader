@@ -1,0 +1,196 @@
+.novel-page > .nav-bar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 1.4rem;
+  background-color: #fff;
+  padding: 0 .4rem;
+}
+
+.novel-page > .nav-bar > .back-btn {
+  display: flex;
+  align-items: center;
+}
+
+.novel-page > .nav-bar > .back-btn > .icon {
+  width: .56rem;
+  height: .56rem;
+}
+
+.novel-page > .nav-bar > .back-btn > .back-title {
+  padding-left: .44rem;
+  font-size: .46rem;
+  color: #ee4745;
+}
+
+.novel-page > .novel-info-contain {
+  display: flex;
+  padding-top: .75rem;
+  padding-left: .72rem;
+  padding-right: .72rem;
+}
+
+.novel-page > .novel-info-contain > .novel-cover {
+  width: 2.64rem;
+  height: 3.76rem;
+  border-radius: 5px;
+}
+
+.novel-page > .novel-info-contain > .novel-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  height: 3.76rem;
+  padding-left: .4rem;
+  padding-top: .1rem;
+  padding-bottom: .1rem;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .novel-title {
+  font-size: .46rem;
+  font-weight: bold;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line {
+  display: flex;
+  align-items: center;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > span {
+  color: #999999;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > span:first-child {
+  padding-right: .2rem;
+  position: relative;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > span:first-child::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: 1px;
+  height: 100%;
+  background: #bdbdbd;
+  transform: scale(.5, .5);
+  right: 0;
+  top: 0;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > span:last-child {
+  padding-left: .2rem;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > .score {
+  color: #fec02f;
+  font-size: .48rem;
+  font-weight: bold;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > .author,
+.novel-page > .novel-info-contain > .novel-info > .info-line > .novel-type,
+.novel-page > .novel-info-contain > .novel-info > .info-line > .count {
+  font-size: .36rem;
+}
+
+.novel-page > .novel-info-contain > .novel-info > .info-line > .author {
+  color: #d82626;
+}
+
+.novel-page > .novel-other-info {
+  padding: 0 .4rem;
+}
+
+.novel-page > .novel-other-info > .follow-info {
+  display: flex;
+  position: relative;
+}
+
+.novel-page > .novel-other-info > .follow-info::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ebebf0;
+  transform: scale(1, .5);
+}
+
+.novel-page > .novel-other-info > .follow-info  > .info-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 33.3%;
+  height: 2.6rem;
+}
+
+.novel-page > .novel-other-info > .follow-info  > .info-item > span:first-child {
+  font-size: .42rem;
+  font-weight: bold;
+  color: #858e98;
+  padding-bottom: .2rem;
+}
+
+.novel-page > .novel-other-info > .follow-info  > .info-item > span:last-child {
+  color: #c8c7cc;
+}
+
+.novel-page > .novel-other-info > .novel-des {
+  padding-top: .54rem;
+  padding-left: .22rem;
+  padding-right: .22rem;
+}
+
+.novel-page > .novel-other-info > .novel-des > .label {
+  font-size: .46rem;
+  font-weight: bold;
+  padding-bottom: .54rem;
+}
+
+.novel-page > .novel-other-info > .novel-des > .content {
+  font-size: .36rem;
+  color: #313133;
+  line-height: 1.6;
+}
+
+.novel-page > .bottom-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 1.65rem;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  padding: 0 .62rem;
+  border-top: solid 1px #f0f0f0;
+}
+
+.novel-page > .bottom-control > button {
+  width: 4.5rem;
+  height: 1.1rem;
+  font-size: .46rem;
+  border-radius: .55rem;
+  color: #fff;
+  background-color: #ee4745;
+}
+
+.novel-page > .bottom-control > button:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ee4745;
+  background-color: #fce4e4;
+}
+
+.novel-page > .bottom-control > button:first-child > img {
+  width: .5rem;
+  height: .5rem;
+}
+
+.novel-page > .bottom-control > button:first-child > span {
+  padding-left: .16rem;
+}

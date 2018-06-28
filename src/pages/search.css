@@ -1,0 +1,116 @@
+.search-page {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.search-page > .search-bar {
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 1.4rem;
+  padding-left: .36rem;
+  background-color: #fff;
+  border-bottom: solid 1px rgb(245,245,245);
+  z-index: 1000;
+}
+
+.search-page > .search-bar > .search-input {
+  display: flex;
+  align-items: center;
+  height: .8rem;
+  background-color: rgb(245,245,245);
+  width: 8.92rem;
+  padding: 0 .15rem;
+  border-radius: .1rem;
+}
+
+.search-page > .search-bar > .cancel-btn {
+  width: 1.52rem;
+  height: .8rem;
+  background-color: transparent;
+  color: #ee4745;
+  font-size: .46rem;
+}
+
+.search-page > .novel-list {
+  padding: 0 .4rem;
+}
+
+.search-page > .novel-list > .novel-item {
+  display: flex;
+  width: 100%;
+  height: 3.6rem;
+  padding-top: .52rem;
+  padding-bottom: .16rem;
+  position: relative;
+  /* border-bottom: solid 1px #ebebf0; */
+}
+
+.search-page > .novel-list > .novel-item::after {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #ebebf0;
+  transform: scale(1, .5);
+}
+
+.search-page > .novel-list > .novel-item > .cover {
+  width: 2.08rem;
+  height: 2.92rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: .26rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .title {
+  font-size: .4rem;
+  padding-top: .1rem;
+  padding-bottom: .24rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .author {
+  display: flex;
+  align-items: center;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .author > .icon {
+  width: .32rem;
+  height: .32rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .author > span {
+  padding-left: .14rem;
+  color: #8a8a8f;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .des {
+  color: #8a8a8f;
+  padding-top: .22rem;
+  padding-bottom: .22rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .status {
+  display: flex;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .status > p {
+  color: #da3d3f;
+  font-size: .3rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .status > p:last-child {
+  padding-left: .1rem;
+}
+
+.search-page > .novel-list > .novel-item > .novel-info > .status > p > span {
+  color: #b8b8b8;
+  font-size: .3rem;
+}
