@@ -45,6 +45,16 @@
   line-height: 1.8;
 }
 
+.read-page > .next-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 1.4rem;
+  font-size: .46rem;
+  margin-top: .4rem;
+}
+
 .read-page > .bottom-menu {
   display: flex;
   position: fixed;
@@ -81,14 +91,30 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10000;
+  z-index: -1;
+  background-color: transparent;
+  transition: all .5s;
 }
 
 .read-page > .chapter-list-view > .chapter-list-contain {
   display: flex;
   flex-direction: column;
   background-color: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   width: 9.68rem;
+  left: -9.68rem;
+  transition: all .5s;
+}
+
+.read-page > .chapter-list-view.show {
+  background-color: rgba(0,0,0,.6);
+  z-index: 10000;
+}
+
+.read-page > .chapter-list-view.show > .chapter-list-contain {
+  transform: translateX(9.68rem);
 }
 
 .read-page > .chapter-list-view > .chapter-list-contain > .chapter-list-contain-header {
@@ -115,8 +141,8 @@
 
 .read-page > .chapter-list-view > .chapter-list-contain > .chapter-list {
   display: block;
-  overflow: auto;
-  height: 100%;
+  overflow-y: scroll;
+  flex: 1;
   padding: 0 .45rem 1.4rem .45rem;
 }
 
@@ -130,5 +156,6 @@
 
 .read-page > .chapter-list-view > .chapter-list-touch-layer {
   flex: 1;
-  background-color: rgba(0,0,0,.6);
+  /* background-color: red; */
+  height: 100%;
 }

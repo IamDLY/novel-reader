@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import BackIcon from '../assets/icons/back.svg';
 import PlusIcon from '../assets/icons/plus.svg';
 import './novel.css';
 
-import { NOVEL_DETAILS, STATIC_RESOURCE } from '../values/api';
+import { STATIC_RESOURCE } from '../values/api';
+import { loadNovelDetails } from '../actions/actions';
 
 const NavBar = ({handleBackBtn}) => (
   <div className="nav-bar">
@@ -15,23 +17,14 @@ const NavBar = ({handleBackBtn}) => (
   </div>
 );
 
-export class NovelPage extends React.Component {
+class _NovelPage extends React.Component {
 
   state = {
     novel: {}
   }
 
   componentDidMount() {
-    fetch(`${NOVEL_DETAILS}/${this.props.match.params.id}`)
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-          novel: response
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.loadNovelDetails(this.props.match.params.id);
   }
 
   toReadPage() {
@@ -39,7 +32,7 @@ export class NovelPage extends React.Component {
   }
 
   render() {
-    const novel = this.state.novel;
+    const novel = this.props.novel;
 
     return (
       <div className="novel-page">
@@ -98,3 +91,19 @@ export class NovelPage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    novel: state.novel.currentNovel
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadNovelDetails(novelID) {
+      dispatch(loadNovelDetails(novelID));
+    }
+  };
+};
+
+export const NovelPage = connect(mapStateToProps, mapDispatchToProps)(_NovelPage);

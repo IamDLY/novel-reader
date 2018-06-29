@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import SearchIcon from '../assets/icons/search.svg';
 import CategoryIcon from '../assets/icons/fenlei.svg';
@@ -17,8 +18,12 @@ const SearchBar = ({handleSearchInputClick}) => (
   </div>
 );
 
-export class HomePage extends React.Component {
+class _HomePage extends React.Component {
   
+  componentWillMount() {
+    console.log(this.props.test);
+  }
+
   toSearchPage() {
     this.props.history.push('/search');
   }
@@ -33,3 +38,9 @@ export class HomePage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {};
+};
+
+export const HomePage = connect(mapStateToProps)(_HomePage);

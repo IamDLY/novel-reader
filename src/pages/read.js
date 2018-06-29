@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import BackIcon from '../assets/icons/back-2.svg';
 import MenuIcon from '../assets/icons/menu.svg';
@@ -7,47 +8,20 @@ import SettingIcon from '../assets/icons/setting.svg';
 import DownloadIcon from '../assets/icons/download.svg';
 import './read.css';
 
-import { NOVEL_SOURCE, NOVEL_CHAPTER } from '../values/api';
+import { loadNovelData, loadChapterContent } from '../actions/actions';
 
-export class ReadPage extends React.Component {
+class _ReadPage extends React.Component {
 
   state = {
-    content: '',
-    chapters: [],
-    currentChapter: 0,
     showMenu: false,
-    showChapterList: false
+    showChapterList: false,
+    enableNext: true
   }
 
   componentDidMount() {
     const novelID = this.props.match.params.id;
 
-    fetch(`${NOVEL_SOURCE}?view=summary&book=${novelID}`)
-      .then(response => response.json())
-      .then(response => {
-        let sources = Array.from(response).filter(item => item.name !== '优质书源' && item.name !== '笔趣阁');
-        console.log(sources);
-        return fetch(`${NOVEL_SOURCE}/${sources[0]._id}?view=chapters`);
-      })
-      .then(response => response.json())
-      .then(response => {
-        this.setState({
-          chapters: response.chapters
-        });
-
-        return fetch(`${NOVEL_CHAPTER}/${encodeURIComponent(response.chapters[this.state.currentChapter].link)}?k=2124b73d7e2e1945&t=1468223717`);
-      })
-      .then(response => response.json())
-      .then(response => {
-        if (response.ok) {
-          this.setState({
-            content: (response.chapter.body + '').replace(/\n/g, '<br/>&nbsp;&nbsp;&nbsp;&nbsp;')
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.loadNovelData(novelID, 0);
   }
 
   pop() {
@@ -74,21 +48,7 @@ export class ReadPage extends React.Component {
   }
 
   loadChapterContent(chapter) {
-    return fetch(`${NOVEL_CHAPTER}/${encodeURIComponent(this.state.chapters[chapter].link)}?k=2124b73d7e2e1945&t=1468223717`)
-      .then(response => response.json())
-      .then(response => {
-        if (response.ok) {
-          window.scrollTo(0, 0);
-
-          this.setState({
-            currentChapter: chapter,
-            content: (response.chapter.body + '').replace(/\n/g, '<br/>&nbsp;&nbsp;&nbsp;&nbsp;')
-          });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.loadChapterContent(chapter, this.props.chapters[chapter].link);
   }
 
   toggleMenu() {
@@ -110,12 +70,20 @@ export class ReadPage extends React.Component {
           className="touch-layer"
           onClick={() => this.toggleMenu()}
         ></div>
-        <p dangerouslySetInnerHTML={{ __html: '&nbsp;&nbsp;&nbsp;&nbsp;' + this.state.content }} />
+        <p dangerouslySetInnerHTML={{ __html: '&nbsp;&nbsp;&nbsp;&nbsp;' + this.props.content }} />
         <button
+          className="next-btn"
+          disabled={!this.state.enableNext}
           onClick={() => {
-            const chapter = this.state.currentChapter + 1;
+            const chapter = this.props.currentChapterIndex + 1;
+
+            if (chapter > this.props.chapters.length) {
+              return;
+            }
 
             this.loadChapterContent(chapter);
+            
+            window.scroll(0, 0);
           }}
         >下一章</button>
 
@@ -141,8 +109,12 @@ export class ReadPage extends React.Component {
           </div>
         </div>
         
-        <div className="chapter-list-view" style={{ display: this.state.showChapterList ? 'flex' : 'none' }}>
-          <div className="chapter-list-contain">
+        <div
+          className={`chapter-list-view ${this.state.showChapterList ? 'show' : ''}`}
+        >
+          <div
+            className="chapter-list-contain"
+          >
             <div className="chapter-list-contain-header bottom-border">
               <p className="title">圣墟</p>
               <section className="chapter-list-control">
@@ -150,16 +122,16 @@ export class ReadPage extends React.Component {
               </section>
             </div>
             <ul className="chapter-list">
-              {this.state.chapters.map((item, index) =>
+              {this.props.chapters.map((item, index) =>
                 <li
                   key={item.link}
                   className="chapter-list-item bottom-border"
                   onClick={() => {
-                    this.loadChapterContent(index)
-                      .then(() => {
-                        this.toggleChapterList();
-                        this.toggleMenu();
-                      });
+                    this.loadChapterContent(index);
+                    this.toggleChapterList();
+                    this.toggleMenu();
+
+                    window.scroll(0, 0);
                   }}
                 >
                   <span>{`${index + 1}. ${item.title}`}</span>
@@ -176,3 +148,25 @@ export class ReadPage extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    content: state.read.content,
+    chapters: state.read.chapters,
+    currentChapterIndex: state.read.currentChapterIndex
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    loadNovelData(novelID, chapterIndex) {
+      dispatch(loadNovelData(novelID, chapterIndex));
+    },
+
+    loadChapterContent(chapterIndex, chapterLink) {
+      dispatch(loadChapterContent(chapterIndex, chapterLink));
+    }
+  };
+};
+
+export const ReadPage = connect(mapStateToProps, mapDispatchToProps)(_ReadPage);

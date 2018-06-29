@@ -1,22 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import UserIcon from '../assets/icons/user.svg';
 import './search.css';
-import { STATIC_RESOURCE, NOVEL_SEARCH } from '../values/api';
 
-const NovelItem = ({data, onClick}) => (
+import { STATIC_RESOURCE } from '../values/api';
+import { changeKeyword, searchNovel, cleanSearch } from '../actions/actions';
+
+const NovelItem = ({novel, onClick}) => (
   <li className="novel-item" onClick={onClick}>
-    <img className="cover" src={`${STATIC_RESOURCE}${data.cover}`} alt=""/>
+    <img className="cover" src={`${STATIC_RESOURCE}${novel.cover}`} alt=""/>
     <div className="novel-info">
-      <p className="title">{data.title}</p>
+      <p className="title">{novel.title}</p>
       <section className="author">
         <img className="icon" src={UserIcon} alt=""/>
-        <span>{data.author}</span>
+        <span>{novel.author}</span>
       </section>
-      <p className="des">{data.shortIntro}</p>
+      <p className="des">{novel.shortIntro}</p>
       <section className="status">
-        <p className="latelyFollower">{data.latelyFollower} <span>人气</span></p>
-        <p className="retentionRatio">{data.retentionRatio || 0}% <span>读者留存</span></p>
+        <p className="latelyFollower">{novel.latelyFollower} <span>人气</span></p>
+        <p className="retentionRatio">{novel.retentionRatio || 0}% <span>读者留存</span></p>
       </section>
     </div>
   </li>
@@ -27,14 +30,14 @@ const NovelList = ({novelList, handleResultClick}) => (
     {novelList.map(novel =>
       <NovelItem
         key={novel._id}
-        data={novel}
+        novel={novel}
         onClick={() => handleResultClick(novel._id)}
       />
     )}
   </ul>
 );
 
-export class SearchPage extends React.Component {
+class _SearchPage extends React.Component {
 
   state = {
     novelList: []
@@ -43,49 +46,19 @@ export class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    if (sessionStorage.getItem('SEARCH_RESULT') !== null) {
-      this.state = {
-        novelList: JSON.parse(sessionStorage.getItem('SEARCH_RESULT'))
-      };
-
-      sessionStorage.removeItem('SEARCH_RESULT');
-    } else {
-      this.state = {
-        novelList: []
-      };
-    }
     this.searchInput = React.createRef();
   }
 
   componentDidMount() {
-    this.searchInput.current.focus();
-  }
-
-  componentWillUnmount() {
     if (this.props.history.action === 'PUSH') {
-      sessionStorage.setItem('SEARCH_RESULT', JSON.stringify(this.state.novelList));
+      this.searchInput.current.focus();
     }
   }
 
-  searchNovel(keyword) {
-    fetch(`${NOVEL_SEARCH}?query=${keyword}&start=0&limit=10`)
-      .then(response => response.json())
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('接口出错');
-        }
-
-        this.setState({
-          novelList: response.books.map(book => {
-            return Object.assign({}, book, {
-              shortIntro: book.shortIntro.length > 30 ? book.shortIntro.substring(0, 30) + ' ...' : book.shortIntro
-            });
-          })
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  componentWillUnmount() {
+    if (this.props.history.action === 'POP') {
+      this.props.cleanSearch();
+    }
   }
 
   toNovelDetails(id) {
@@ -101,9 +74,11 @@ export class SearchPage extends React.Component {
             ref={this.searchInput}
             placeholder="书名、作者、分类"
             className="search-input"
+            value={this.props.keyword}
+            onChange={e => this.props.changeKeyword(e.currentTarget.value)}
             onKeyUp={e => {
-              if (e.keyCode === 13 && e.currentTarget.value !== '') {
-                this.searchNovel(e.currentTarget.value);
+              if (e.keyCode === 13 && this.props.keyword !== '') {
+                this.props.searchNovel(this.props.keyword);
               }
             }}
           />
@@ -111,7 +86,7 @@ export class SearchPage extends React.Component {
         </div>
 
         <NovelList
-          novelList={this.state.novelList}
+          novelList={this.props.novelList}
           handleResultClick={id => this.toNovelDetails(id)}
         />
       </div>
@@ -119,3 +94,28 @@ export class SearchPage extends React.Component {
   }
 
 }
+
+const mapStateToProps = state => {
+  return {
+    keyword: state.search.keyword,
+    novelList: state.search.novelList
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeKeyword(keyword) {
+      dispatch(changeKeyword(keyword));
+    },
+
+    searchNovel(keyword) {
+      dispatch(searchNovel(keyword));
+    },
+
+    cleanSearch() {
+      dispatch(cleanSearch());
+    }
+  };
+};
+
+export const SearchPage = connect(mapStateToProps, mapDispatchToProps)(_SearchPage);
