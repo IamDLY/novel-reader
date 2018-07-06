@@ -19,10 +19,6 @@ const SearchBar = ({handleSearchInputClick}) => (
 );
 
 class _HomePage extends React.Component {
-  
-  componentWillMount() {
-    console.log(this.props.test);
-  }
 
   toSearchPage() {
     this.props.history.push('/search');
