@@ -61,6 +61,7 @@
 
 .search-page > .novel-list > .novel-item > .cover {
   width: 2.08rem;
+  min-width: 2.08rem;
   height: 2.92rem;
 }
 

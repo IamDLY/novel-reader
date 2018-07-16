@@ -46,3 +46,77 @@
   color: #fff;
   padding-left: .26rem;
 }
+
+.home-page > .module-title {
+  position: relative;
+  margin-top: .26rem;
+  padding-left: .55rem;
+  font-size: .46rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.home-page > .module-title::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 5px;
+  background-color: #a70a0a;
+}
+
+.home-page > .native-novel-list > .native-novel-item {
+  display: flex;
+  height: 2.62rem;
+  padding-left: .55rem;
+  padding-right: .55rem;
+  position: relative;
+}
+
+.home-page > .native-novel-list > .native-novel-item > .cover {
+  width: 1.4rem;
+  min-width: 1.4rem;
+  height: 1.92rem;
+  margin-top: .52rem;
+  border-radius: 3px;
+}
+
+.home-page > .native-novel-list > .native-novel-item > .novel-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  flex: 1;
+  height: 100%;
+  padding-top: .52rem;
+  padding-bottom: .18rem;
+  margin-left: .36rem;
+  color: #a3a3a3;
+}
+
+.home-page > .native-novel-list > .native-novel-item > .novel-info::after {
+  background-color: #ebebf0;
+}
+
+.home-page > .native-novel-list > .native-novel-item > .novel-info > .title {
+  padding-bottom: .28rem;
+  color: #000;
+  font-size: .42rem;
+}
+
+.home-page > .native-novel-list > .native-novel-item > .novel-update {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: .72rem;
+  height: .4rem;
+  position: absolute;
+  background-color: #ee4745;
+  color: #fff;
+  font-size: .26rem;
+  border-radius: 1px;
+  top: 1.12rem;
+  right: .86rem;
+}
