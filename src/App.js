@@ -6,6 +6,9 @@ import {
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import './App.css';
 
@@ -15,10 +18,20 @@ import { HomePage } from './pages/home';
 import { NovelPage } from './pages/novel';
 import { ReadPage } from './pages/read';
 
+const persistConfig = {
+  key: 'root',
+  whitelist: ['novel'],
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, NovelApp);
+
 const store = createStore(
-  NovelApp,
+  persistedReducer,
   applyMiddleware(thunk)
 );
+
+const persistor = persistStore(store);
 
 const calHTMLFontSize = () => {
   const html = document.querySelector('html');
@@ -36,14 +49,16 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Router>
-          <div className="app">
-            <Route exact path="/" component={HomePage}/>
-            <Route path="/search" component={SearchPage}/>
-            <Route path="/novel/:id" component={NovelPage}/>
-            <Route path="/read/:id" component={ReadPage}/>
-          </div>
-        </Router>
+        <PersistGate loading={null} persistor={persistor}>
+          <Router>
+            <div className="app">
+              <Route exact path="/" component={HomePage}/>
+              <Route path="/search" component={SearchPage}/>
+              <Route path="/novel/:id" component={NovelPage}/>
+              <Route path="/read/:id" component={ReadPage}/>
+            </div>
+          </Router>
+        </PersistGate>
       </Provider>
     );
   }

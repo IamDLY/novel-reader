@@ -6,7 +6,7 @@ import PlusIcon from '../assets/icons/plus.svg';
 import './novel.css';
 
 import { STATIC_RESOURCE } from '../values/api';
-import { loadNovelDetails } from '../actions/actions';
+import { loadNovelDetails, addNativeNovel } from '../actions/actions';
 
 const NavBar = ({handleBackBtn}) => (
   <div className="nav-bar">
@@ -18,10 +18,6 @@ const NavBar = ({handleBackBtn}) => (
 );
 
 class _NovelPage extends React.Component {
-
-  state = {
-    novel: {}
-  }
 
   componentDidMount() {
     this.props.loadNovelDetails(this.props.match.params.id);
@@ -81,7 +77,7 @@ class _NovelPage extends React.Component {
         </div>
 
         <div className="bottom-control">
-          <button>
+          <button onClick={() => this.props.addNativeNovel(novel)}>
             <img src={PlusIcon} alt=""/>
             <span>追更新</span>
           </button>
@@ -102,6 +98,10 @@ const mapDispatchToProps = dispatch => {
   return {
     loadNovelDetails(novelID) {
       dispatch(loadNovelDetails(novelID));
+    },
+
+    addNativeNovel(novel) {
+      dispatch(addNativeNovel(novel));
     }
   };
 };

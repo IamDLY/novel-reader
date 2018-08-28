@@ -24,6 +24,8 @@
   width: 8.92rem;
   padding: 0 .15rem;
   border-radius: .1rem;
+  /* safari下去除默认样式 */
+  -webkit-appearance: none;
 }
 
 .search-page > .search-bar > .cancel-btn {

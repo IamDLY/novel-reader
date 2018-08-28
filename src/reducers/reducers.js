@@ -6,7 +6,8 @@ import {
   CLEAN_SEARCH,
   LOAD_NOVEL_DETAILS,
   LOAD_NOVEL_DATA,
-  LOAD_CHAPTER_CONTENT
+  LOAD_CHAPTER_CONTENT,
+  ADD_NATIVE_NOVEL
 } from '../actions/actions';
 
 
@@ -43,7 +44,8 @@ const search = (state = SearchInitState, action) => {
 };
 
 const NovelInitState = {
-  currentNovel: {}
+  currentNovel: {},
+  nativeList: []
 };
 
 const novel = (state = NovelInitState, action) => {
@@ -57,6 +59,15 @@ const novel = (state = NovelInitState, action) => {
         default:
           return state;
       }
+    
+    case ADD_NATIVE_NOVEL:
+      return {
+        ...state,
+        nativeList: [
+          ...state.nativeList,
+          action.novel
+        ]
+      };  
 
     default:
       return state;

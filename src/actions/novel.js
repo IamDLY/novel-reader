@@ -27,3 +27,13 @@ export const loadNovelDetails = (novelID) => {
       });
   };
 };
+
+// 添加小说到本地书架
+export const ADD_NATIVE_NOVEL = 'ADD_NATIVE_NOVEL';
+
+export const addNativeNovel = (novel) => {
+  return {
+    type: ADD_NATIVE_NOVEL,
+    novel
+  };
+};

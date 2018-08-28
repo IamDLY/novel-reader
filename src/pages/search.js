@@ -39,10 +39,6 @@ const NovelList = ({novelList, handleResultClick}) => (
 
 class _SearchPage extends React.Component {
 
-  state = {
-    novelList: []
-  }
-
   constructor(props) {
     super(props);
 
