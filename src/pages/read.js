@@ -30,17 +30,6 @@ class _ReadPage extends React.Component {
 
   toggleChapterList() {
     this.setState(preState => {
-      // const html = document.querySelector('html');
-      // const body = document.querySelector('body');
-
-      // if (!preState.showChapterList) {
-      //   html.style.height = '100%';
-      //   body.style.height = '100%';
-      // } else {
-      //   html.style.height = 'auto';
-      //   body.style.height = 'auto';
-      // }
-
       return {
         showChapterList: !preState.showChapterList
       };
@@ -124,7 +113,7 @@ class _ReadPage extends React.Component {
             <ul className="chapter-list">
               {this.props.chapters.map((item, index) =>
                 <li
-                  key={item.link}
+                  key={index}
                   className="chapter-list-item bottom-border"
                   onClick={() => {
                     this.loadChapterContent(index);

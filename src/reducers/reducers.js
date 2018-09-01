@@ -7,7 +7,7 @@ import {
   LOAD_NOVEL_DETAILS,
   LOAD_NOVEL_DATA,
   LOAD_CHAPTER_CONTENT,
-  ADD_NATIVE_NOVEL
+  TOGGLE_NATIVE_NOVEL
 } from '../actions/actions';
 
 
@@ -60,18 +60,35 @@ const novel = (state = NovelInitState, action) => {
           return state;
       }
     
-    case ADD_NATIVE_NOVEL:
-      return {
-        ...state,
-        nativeList: [
-          ...state.nativeList,
-          action.novel
-        ]
-      };  
+    case TOGGLE_NATIVE_NOVEL:
+      return handleToggleNativeNovel(state, action);
 
     default:
       return state;
   }
+};
+
+const handleToggleNativeNovel = (state, action) => {
+  const novelIndex = state.nativeList.findIndex(item => action.novel._id === item._id);
+
+  if (novelIndex !== -1) {
+    let newNativeList = state.nativeList;
+
+    newNativeList.splice(novelIndex, 1);
+
+    return {
+      ...state,
+      nativeList: newNativeList
+    };
+  }
+
+  return {
+    ...state,
+    nativeList: [
+      ...state.nativeList,
+      action.novel
+    ]
+  };  
 };
 
 const ReadInitState = {

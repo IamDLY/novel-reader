@@ -1,9 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import dayjs from 'dayjs';
 
 import SearchIcon from '../assets/icons/search.svg';
 import CategoryIcon from '../assets/icons/fenlei.svg';
 import './home.css';
+
+import { STATIC_RESOURCE } from '../values/api';
 
 const SearchBar = ({handleSearchInputClick}) => (
   <div className="search-bar">
@@ -24,7 +27,13 @@ class _HomePage extends React.Component {
     this.props.history.push('/search');
   }
 
+  toReadPage(novelID) {
+    this.props.history.push(`/read/${novelID}`);
+  }
+
   render() {
+    const {novelList} = this.props;
+
     return (
       <div className="page home-page">
         <SearchBar
@@ -34,14 +43,26 @@ class _HomePage extends React.Component {
         <p className="module-title">书架</p>
 
         <ul className="native-novel-list">
-          <li className="native-novel-item">
-            <img className="cover" src="http://statics.zhuishushenqi.com/agent/http%3A%2F%2Fimg.1391.com%2Fapi%2Fv1%2Fbookcenter%2Fcover%2F1%2F2126166%2F2126166_c1002339e5664d7bb1a536e2608fa599.jpg%2F" alt=""/>
-            <section className="novel-info bottom-border">
-              <p className="title">圣墟</p>
-              <span className="tip">10小时前:第1140章 追杀</span>
-            </section>
-            <span className="novel-update">更新</span>
-          </li>
+          {novelList.map(novel => {
+            const diffDay = dayjs().diff(dayjs(novel.updated), 'day');
+            
+            let diffTime = `${diffDay}天前`;
+
+            if (diffDay === 0) {
+              diffTime = `${dayjs().diff(dayjs(novel.updated), 'hour')}小时前`
+            }
+
+            return (
+              <li key={novel._id} onClick={() => this.toReadPage(novel._id)} className="native-novel-item">
+                <img className="cover" src={`${STATIC_RESOURCE}${novel.cover}`} alt=""/>
+                <section className="novel-info bottom-border">
+                  <p className="title">{novel.title}</p>
+                  <span className="tip">{`${diffTime}:第${novel.chaptersCount}章 ${novel.lastChapter}`}</span>
+                </section>
+                {false && <span className="novel-update">更新</span>}
+              </li>
+            );
+          })}
         </ul>
       </div>
     );
@@ -49,7 +70,9 @@ class _HomePage extends React.Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    novelList: state.novel.nativeList
+  };
 };
 
 export const HomePage = connect(mapStateToProps)(_HomePage);

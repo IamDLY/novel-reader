@@ -28,12 +28,12 @@ export const loadNovelDetails = (novelID) => {
   };
 };
 
-// 添加小说到本地书架
-export const ADD_NATIVE_NOVEL = 'ADD_NATIVE_NOVEL';
+// 添加或者删除小说到本地书架
+export const TOGGLE_NATIVE_NOVEL = 'TOGGLE_NATIVE_NOVEL';
 
-export const addNativeNovel = (novel) => {
+export const toggleNativeNovel = (novel) => {
   return {
-    type: ADD_NATIVE_NOVEL,
+    type: TOGGLE_NATIVE_NOVEL,
     novel
   };
 };

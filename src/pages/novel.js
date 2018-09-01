@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 
 import BackIcon from '../assets/icons/back.svg';
 import PlusIcon from '../assets/icons/plus.svg';
+import MinusIcon from '../assets/icons/minus.svg';
 import './novel.css';
 
 import { STATIC_RESOURCE } from '../values/api';
-import { loadNovelDetails, addNativeNovel } from '../actions/actions';
+import { loadNovelDetails, toggleNativeNovel } from '../actions/actions';
 
 const NavBar = ({handleBackBtn}) => (
   <div className="nav-bar">
@@ -77,9 +78,9 @@ class _NovelPage extends React.Component {
         </div>
 
         <div className="bottom-control">
-          <button onClick={() => this.props.addNativeNovel(novel)}>
-            <img src={PlusIcon} alt=""/>
-            <span>追更新</span>
+          <button onClick={() => this.props.toggleNativeNovel(novel)}>
+            <img src={this.props.hasNative ? MinusIcon : PlusIcon} alt=""/>
+            <span>{this.props.hasNative ? '不追了' : '追更新'}</span>
           </button>
           <button onClick={() => this.toReadPage()}>开始阅读</button>
         </div>
@@ -90,7 +91,8 @@ class _NovelPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    novel: state.novel.currentNovel
+    novel: state.novel.currentNovel,
+    hasNative: state.novel.nativeList.find(novel => state.novel.currentNovel._id === novel._id) !== undefined
   };
 };
 
@@ -100,8 +102,8 @@ const mapDispatchToProps = dispatch => {
       dispatch(loadNovelDetails(novelID));
     },
 
-    addNativeNovel(novel) {
-      dispatch(addNativeNovel(novel));
+    toggleNativeNovel(novel) {
+      dispatch(toggleNativeNovel(novel));
     }
   };
 };
